@@ -1,6 +1,6 @@
 # PugDAG EXPLORER
 
-This is a fork of Kaspa explorer used for the Pugdag network project [https://explorer.pugdagcoin.com](https://explorer.pugdag.com) written in JS with React.JS library.
+This is a fork of Kaspa explorer used for the Pugdag network project [https://explorer.pugdag.com](https://explorer.pugdag.com) written in JS with React.JS library.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
