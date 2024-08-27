@@ -1,6 +1,6 @@
-# KARLSEN EXPLORER
+# PUGDAG EXPLORER
 
-This is a fork of Kaspa explorer used for the Pugdag network project [https://explorer.pugdagcoin.com](https://explorer.pugdagcoin.com) written in JS with React.JS library.
+This is a fork of Kaspa explorer used for the Pugdag network project [https://explorer.pugdag.com](https://explorer.pugdag.com) written in JS with React.JS library.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -12,7 +12,7 @@ For developing this you need Node.JS and just npm install.
 
 Do you have any new ideas, wishes or bugs for Kaspa explorer? Contact @lAmeR^#7173 at Kaspa Discord.
 
-Do you have any new ideas, wishes or bugs for Pugdag explorer? Contact @Lemois#8277 at Pugdag Discord.
+Do you have any new ideas, wishes or bugs for Pugdag explorer? Contact @ox_josh at Pugdag Discord.
 
 ## DONATION ♥
 
