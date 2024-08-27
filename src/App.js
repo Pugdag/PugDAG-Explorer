@@ -1,4 +1,3 @@
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import { useEffect, useRef, useState } from 'react';
@@ -22,6 +21,7 @@ import TransactionInfo from './components/TransactionInfo';
 import TxPage from './components/TxPage';
 import Dashboard from './Dashboard';
 import { getBlock } from './pugdag-api-client';
+import TopWallets from "./components/TopWallets";
 import { Analytics } from '@vercel/analytics/react';
 // import 'moment/min/locales';
 
@@ -89,25 +89,38 @@ function App() {
     e.target.searchbox.value = ""
   }
 
-  //const updatePrice = () => {
-  //  fetch(`https://api.pugdag.com/info/market-data`, {
-  //    headers: { "Cache-Control": "no-cache" }
-  //  })
-  //    .then(response => response.json())
-  //    .then(data => {
-  //      setPrice(data['current_price']['usd'].toFixed(4));
-  //      setMarketData(data);
-  //    })
-  //    .catch(r => console.log(r))
-  //}
+  const updatePrice = () => {
+    fetch(`https://api.pugdag.com/info/market-data`, {
+      headers: { "Cache-Control": "no-cache" }
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("API Response:", data); // Débogage pour voir ce que l'API retourne
+  
+        // Vérifier si la propriété usdValue est définie dans la réponse JSON
+        if (data.usdValue !== undefined) {
+          setPrice(parseFloat(data.usdValue).toFixed(8)); // Vous pouvez ajuster le nombre de décimales selon vos besoins
+          setMarketData(data); // Vous pouvez également mettre à jour d'autres données de marché si nécessaire
+        } else {
+          console.error("Invalid API response format - missing usdValue:", data);
+          // Gérer le cas où usdValue est absent de la réponse
+          // Par exemple, fournir une valeur par défaut pour le prix ou laisser le prix inchangé
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching market data:", error);
+        // Gérer les erreurs de requête
+      });
+  }
+  
 
 
   useEffect(() => {
-    //updatePrice()
+    updatePrice()
 
-    //const intervalPrice = setInterval (() => {
-    //  updatePrice()
-    //}, 60000);
+    const intervalPrice = setInterval (() => {
+      updatePrice()
+    }, 60000);
 
 
     socket.on('connect', () => {
@@ -178,6 +191,9 @@ function App() {
                     <Nav.Item><NavLink className="nav-link fs-5" onClick={closeMenuIfNeeded} to={"/"}>Dashboard</NavLink></Nav.Item>
                     <Nav.Item><NavLink className="nav-link fs-5" onClick={closeMenuIfNeeded} to={"/blocks"}>Blocks</NavLink></Nav.Item>
                     <Nav.Item><NavLink className="nav-link fs-5" onClick={closeMenuIfNeeded} to={"/txs"}>Transactions</NavLink></Nav.Item>
+		    <Nav.Item><NavLink className="nav-link fs-5" onClick={closeMenuIfNeeded} to={"/addresses"}>Top Wallets</NavLink></Nav.Item>
+                    <Nav.Item><a className="nav-link fs-5" onClick={closeMenuIfNeeded} href={"https://pugdag.com"}target="_blank">Website</a></Nav.Item>
+                    <Nav.Item><a className="nav-link fs-5" onClick={closeMenuIfNeeded} href={"https://wallet.pugdag.com"}target="_blank">Webwallet</a></Nav.Item>
                   </Nav>
                   <div className='ms-auto navbar-price'>${price} <span className="text-light">/ PUG</span></div>
                 </Navbar.Collapse>
@@ -200,6 +216,7 @@ function App() {
               <Route path="/blocks" element={<BlocksPage />} />
               <Route path="/blocks/:id" element={<BlockInfo />} />
               <Route path="/blocks/:id/:txview" element={<BlockInfo />} />
+	      <Route path="/addresses" element={<TopWallets />} />
               <Route path="/addresses/:addr" element={<AddressInfoPage />} />
               <Route path="/txs" element={<TxPage />} />
               <Route path="/txs/:id" element={<TransactionInfo />} />

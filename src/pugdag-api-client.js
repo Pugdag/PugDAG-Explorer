@@ -111,5 +111,22 @@ export async function getTransactions(tx_list, inputs, outputs) {
     return res
 }
 
+// analytic
+export const getTopAddresses = async (limit = 100, offset = 0) => {
+  const response = await fetch(`/analytics/addresses/top?limit=${limit}&offset=${offset}`);
+  const data = await response.json();
+  return data;
+};
 
+export const getCoinDistribution = async (minAmount = 0, maxAmount = -1) => {
+  const response = await fetch(`/analytics/addresses/distribution?min_amount=${minAmount}&max_amount=${maxAmount}`);
+  const data = await response.json();
+  return data;
+};
+
+export const getTotalAddresses = async () => {
+  const response = await fetch(`/analytics/addresses/total`);
+  const data = await response.json();
+  return data;
+};
 
